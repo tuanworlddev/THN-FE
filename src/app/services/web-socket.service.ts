@@ -9,7 +9,7 @@ export class WebSocketService {
   private readonly socket$: WebSocketSubject<any> | undefined;
 
   constructor() {
-    this.socket$ = webSocket('wss://84cc-2402-800-629c-f724-cc90-fa49-7dd5-5def.ngrok-free.app/ws');
+    this.socket$ = webSocket('wss://localhost:8080/ws');
   }
 
   sendMessage(message: any) {
