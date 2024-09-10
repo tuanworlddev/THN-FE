@@ -1,1 +1,32 @@
-<p>video-call works!</p>
+<div class="p-2 relative">
+  <div class="flex flex-col md:flex-row justify-around items-center gap-1 mb-3">
+    <div class="relative w-full md:w-1/2">
+      <video #localVideo class="aspect-[4/3] -scale-x-100 w-full border-2 border-gray-900 rounded" autoplay playsinline></video>
+      @if (isLoadingLocalVideo) {
+        <div class="loading-overlay absolute inset-0 flex justify-center items-center bg-black rounded">
+          <div class="loader border-t-transparent border-solid rounded-full border-green-600 border-4 h-16 w-16 animate-spin"></div>
+        </div>
+      }
+    </div>
+
+    <div class="relative w-full md:w-1/2 border-2 border-gray-900 rounded">
+      <video #remoteVideo class="aspect-[4/3] -scale-x-100 w-full" autoplay playsinline></video>
+      @if (isLoadingRemoteVideo) {
+        <div class="absolute inset-0 flex justify-center items-center bg-black">
+          <div class="absolute rounded-full h-32 w-32 border-t-4 border-b-4 border-purple-500" [class.animate-spin]="isStarted"></div>
+          <img src="https://www.svgrepo.com/show/509001/avatar-thinking-9.svg"  class="rounded-full h-28 w-28">
+          <div class="absolute text-white">Số lượng trực tuyến {{ countUser }}</div>
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="flex justify-start items-center gap-3 mb-3">
+    @if (!isStarted) {
+      <button type="button" (click)="startCall()" class="p-8 text-white bg-green-700 hover:bg-green-800 font-medium rounded-lg dark:bg-green-600 dark:hover:bg-green-700">Start</button>
+    } @else {
+      <button type="button" (click)="nextCall()" class="p-8 text-white bg-green-700 hover:bg-green-800 disabled:bg-green-300 disabled:hover:bg-green-300 font-medium rounded-lg dark:bg-green-600 dark:hover:bg-green-700" [disabled]="isLoadingRemoteVideo">Next</button>
+    }
+    <button type="button" (click)="stopCall()" class="p-8 text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg dark:bg-red-600 dark:hover:bg-red-700 disabled:bg-red-300 disabled:hover:bg-red-300" [disabled]="!isStarted">Stop</button>
+  </div>
+</div>
